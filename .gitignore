@@ -120,7 +120,8 @@ _modules/*
 /api/
 
 # Visual Studio Code
-.vscode/
+.vscode/*
+!.vscode/settings.json
 
 /results/
 /phpunit*.xml
