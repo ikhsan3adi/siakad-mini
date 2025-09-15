@@ -3,11 +3,14 @@
 <?= $this->section('title') ?><?= lang('Auth.login') ?> <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
-
-<div class="container d-flex justify-content-center p-5">
+<div class="container p-5 min-vh-100 d-flex flex-column justify-content-center align-items-center">
     <div class="card col-12 col-md-5 shadow-sm">
         <div class="card-body">
-            <h5 class="card-title mb-5"><?= lang('Auth.login') ?></h5>
+            <h4 class="card-title text-center mb-4">
+                <i class="bi bi-mortarboard-fill pe-none me-2" style="font-size: 24pt;"></i>
+                SIAKAD
+            </h4>
+            <h5 class="card-title mb-3"><?= lang('Auth.login') ?></h5>
 
             <?php if (session('error') !== null) : ?>
                 <div class="alert alert-danger" role="alert"><?= esc(session('error')) ?></div>
@@ -64,7 +67,7 @@
                     </div>
                 <?php endif; ?>
 
-                <div class="d-grid col-12 col-md-8 mx-auto m-3">
+                <div class="d-grid mx-auto m-3">
                     <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.login') ?></button>
                 </div>
 

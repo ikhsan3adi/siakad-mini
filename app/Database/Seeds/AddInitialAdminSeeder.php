@@ -2,34 +2,25 @@
 
 namespace App\Database\Seeds;
 
-use App\Models\UserModel;
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\Shield\Entities\User;
+use App\Models\UserModel;
 
 class AddInitialAdminSeeder extends Seeder
 {
-    private UserModel $userModel;
-
-    public function __construct()
-    {
-        $this->userModel = new UserModel();
-    }
-
     public function run()
     {
-        /** @var User $user */
-        $user = $this->userModel->createNewUser([
+        $userModel = new UserModel();
+
+        $data = [
             'username'  => 'admin',
-            'full_name' => 'Administrator',
             'email'     => 'admin@example.com',
+            'full_name' => 'Administrator',
             'password'  => 'admin123',
-        ]);
+        ];
 
-        $userId = $this->userModel->insert($user);
-
-        $user->id = $userId;
-
-        $user->addGroup('admin');
-        $user->activate();
+        $user = new User($data);
+        $user->id = $userModel->insert($user);
+        $user->addGroup('admin')->activate();
     }
 }

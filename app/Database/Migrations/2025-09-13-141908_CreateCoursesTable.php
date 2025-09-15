@@ -9,11 +9,11 @@ class CreateCoursesTable extends Migration
     public function up()
     {
         $fields = [
-            'id' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
-                'auto_increment' => true,
+            'course_code' => [
+                'type' => 'VARCHAR',
+                'constraint' => 10,
+                'null' => false,
+                'unique' => true,
             ],
             'course_name' => [
                 'type' => 'VARCHAR',
@@ -45,7 +45,7 @@ class CreateCoursesTable extends Migration
         $this->forge->addField($fields);
 
         // primary key
-        $this->forge->addKey('id', primary: true);
+        $this->forge->addKey('course_code', primary: true);
 
         $this->forge->createTable('courses');
     }

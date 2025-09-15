@@ -7,12 +7,13 @@ use CodeIgniter\Model;
 class CourseModel extends Model
 {
     protected $table            = 'courses';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $primaryKey       = 'course_code';
+    protected $useAutoIncrement = false;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        'course_code',
         'course_name',
         'description',
         'credits',
@@ -30,4 +31,12 @@ class CourseModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
+
+    public function search(string $keyword)
+    {
+        return $this
+            ->where('deleted_at', null)
+            ->like('course_name', $keyword, insensitiveSearch: true)
+            ->orLike('description', $keyword, insensitiveSearch: true);
+    }
 }

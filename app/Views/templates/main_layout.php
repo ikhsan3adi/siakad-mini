@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="utf-8">
@@ -24,15 +24,57 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body class="min-vh-100">
+    <!-- sidebar -->
 
-    <main role="main" class="container">
-        <?= $this->renderSection('main') ?>
+    <main role="main" class="d-flex flex-nowrap min-vh-100">
+        <?= $this->include('templates/sidebar') ?>
+
+        <div class="d-flex flex-column flex-grow-1">
+            <?= $this->include('templates/header') ?>
+            <?= $this->renderSection('content') ?>
+        </div>
     </main>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
+    <script>
+        // set theme based on local storage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        const toggleThemeCheckbox = document.getElementById('toggleThemeCheckbox');
+        const icon = document.getElementById('toggleThemeIcon');
+
+        if (savedTheme === 'dark') {
+            toggleThemeCheckbox.checked = true;
+
+            icon.classList.remove('bi-sun-fill');
+            icon.classList.add('bi-moon-fill');
+        } else {
+            toggleThemeCheckbox.checked = false;
+
+            icon.classList.remove('bi-moon-fill');
+            icon.classList.add('bi-sun-fill');
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-bs-theme', newTheme);
+
+            localStorage.setItem('theme', newTheme);
+
+            const icon = document.getElementById('toggleThemeIcon');
+            if (newTheme === 'dark') {
+                icon.classList.remove('bi-sun-fill');
+                icon.classList.add('bi-moon-fill');
+            } else {
+                icon.classList.remove('bi-moon-fill');
+                icon.classList.add('bi-sun-fill');
+            }
+        }
+    </script>
 </body>
 
 </html>

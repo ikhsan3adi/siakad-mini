@@ -22,12 +22,14 @@ $routes->group('admin', ['filter' => ['cookiejwt', 'group:admin']], static funct
     // --- Kelola Mata Kuliah / Courses ---
     $routes->group('courses', static function (RouteCollection $routes) {
         $routes->get('/', 'Admin\CourseController::index'); // Menampilkan semua mata kuliah
-        $routes->get('(:num)', 'Admin\CourseController::show/$1'); // Menampilkan detail mata kuliah
+        $routes->get('(:segment)', 'Admin\CourseController::show/$1'); // Menampilkan detail mata kuliah
         $routes->get('new', 'Admin\CourseController::new'); // Menampilkan form tambah
         $routes->post('create', 'Admin\CourseController::create'); // Memproses form tambah
-        $routes->get('edit/(:num)', 'Admin\CourseController::edit/$1'); // Menampilkan form edit
-        $routes->put('update/(:num)', 'Admin\CourseController::update/$1'); // Memproses form edit
-        $routes->delete('delete/(:num)', 'Admin\CourseController::delete/$1'); // Menghapus data
+        $routes->get('edit/(:segment)', 'Admin\CourseController::edit/$1'); // Menampilkan form edit
+        $routes->put('update/(:segment)', 'Admin\CourseController::update/$1'); // Memproses form edit
+
+        //! On Delete RESTRICT
+        //! $routes->delete('delete/(:segment)', 'Admin\CourseController::delete/$1'); // Menghapus data
     });
 
     // --- Kelola User (student dan admin) ---

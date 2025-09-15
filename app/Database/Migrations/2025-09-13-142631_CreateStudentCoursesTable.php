@@ -14,10 +14,10 @@ class CreateStudentCoursesTable extends Migration
                 'constraint' => 11,
                 'unsigned' => true,
             ],
-            'course_id' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
+            'course_code' => [
+                'type' => 'VARCHAR',
+                'constraint' => 10,
+                'null' => false,
             ],
             'enroll_date' => [
                 'type' => 'DATETIME',
@@ -27,7 +27,7 @@ class CreateStudentCoursesTable extends Migration
         $this->forge->addField($fields);
 
         // composite primary key
-        $this->forge->addKey(['student_id', 'course_id'], primary: true);
+        $this->forge->addKey(['student_id', 'course_code'], primary: true);
 
         // referential integrity constraints
         $this->forge->addForeignKey(
@@ -38,9 +38,9 @@ class CreateStudentCoursesTable extends Migration
             onDelete: 'CASCADE'
         );
         $this->forge->addForeignKey(
-            'course_id',
+            'course_code',
             tableName: 'courses',
-            tableField: 'id',
+            tableField: 'course_code',
             onUpdate: 'CASCADE',
             onDelete: 'RESTRICT'
         );

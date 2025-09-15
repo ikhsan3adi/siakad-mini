@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="utf-8">
@@ -22,11 +22,17 @@
             font-family: 'Inter', sans-serif;
         }
     </style>
+
+    <script>
+        // set theme based on local storage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    </script>
 </head>
 
-<body class="bg-light">
+<body>
 
-    <main role="main" class="container">
+    <main role="main">
         <?= $this->renderSection('main') ?>
     </main>
 
