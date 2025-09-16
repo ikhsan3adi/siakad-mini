@@ -80,7 +80,7 @@ Courses - SIAKAD
                     <?php endforeach; ?>
                     <?php if (empty($courses)) : ?>
                         <tr>
-                            <td colspan="4" class="text-center">No courses found.</td>
+                            <td colspan="5" class="text-center">No courses found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
