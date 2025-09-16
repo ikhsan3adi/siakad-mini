@@ -9,6 +9,8 @@ $currentPath = $uri->getPath();
 $currentPath = str_replace('/index.php/', '', $currentPath);
 $currentPath = str_replace('index.php/', '', $currentPath);
 
+helper('text');
+
 ?>
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-secondary" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -78,7 +80,7 @@ $currentPath = str_replace('index.php/', '', $currentPath);
             <img src="https://api.dicebear.com/9.x/identicon/svg?backgroundColor=ffffff&seed=<?= auth()->user()->username ?>" alt="profile-image" width="32" height="32" class="rounded-circle me-2">
             <span class="d-flex flex-column">
                 <strong>
-                    <?= auth()->user()->full_name ?>
+                    <?= ellipsize(auth()->user()->full_name, 22) ?>
                 </strong>
                 <small class="text-muted">
                     <?= auth()->user()->username ?>
@@ -95,3 +97,40 @@ $currentPath = str_replace('index.php/', '', $currentPath);
         </ul>
     </div>
 </div>
+
+<script>
+    // set theme based on local storage
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    const toggleThemeCheckbox = document.getElementById('toggleThemeCheckbox');
+    const icon = document.getElementById('toggleThemeIcon');
+
+    if (savedTheme === 'dark') {
+        toggleThemeCheckbox.checked = true;
+
+        icon.classList.remove('bi-sun-fill');
+        icon.classList.add('bi-moon-fill');
+    } else {
+        toggleThemeCheckbox.checked = false;
+
+        icon.classList.remove('bi-moon-fill');
+        icon.classList.add('bi-sun-fill');
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-bs-theme', newTheme);
+
+        localStorage.setItem('theme', newTheme);
+
+        const icon = document.getElementById('toggleThemeIcon');
+        if (newTheme === 'dark') {
+            icon.classList.remove('bi-sun-fill');
+            icon.classList.add('bi-moon-fill');
+        } else {
+            icon.classList.remove('bi-moon-fill');
+            icon.classList.add('bi-sun-fill');
+        }
+    }
+</script>

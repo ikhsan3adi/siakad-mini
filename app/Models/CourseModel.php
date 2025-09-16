@@ -43,7 +43,7 @@ class CourseModel extends Model
     public function getEnrolledStudents(string $courseCode, bool $sortByGrade = false)
     {
         $builder = $this->db->table('student_courses');
-        $builder->select('users.id, users.username, users.full_name, auth_identities.secret as email, users.entry_year, student_courses.grade, student_courses.enroll_date');
+        $builder->select('users.*, auth_identities.secret as email, student_courses.*');
         $builder->join('users', 'student_courses.student_id = users.id');
         $builder->join('auth_identities', 'student_courses.student_id = auth_identities.user_id');
         $builder->where('student_courses.course_code', $courseCode);
@@ -59,13 +59,17 @@ class CourseModel extends Model
         return $query->getResultArray();
     }
 
-    public function enrollStudent(string $courseCode, int $studentId, string $enrollDate, string $grade = null)
-    {
+    public function enrollStudent(
+        string $courseCode,
+        int $studentId,
+        string $enrollDate,
+        string|float|int $grade = null
+    ) {
         $data = [
-            'course_code' => $courseCode,
-            'student_id' => $studentId,
-            'enroll_date' => $enrollDate,
-            'grade' => $grade,
+            'course_code'   => $courseCode,
+            'student_id'    => $studentId,
+            'enroll_date'   => $enrollDate,
+            'grade'         => $grade,
         ];
 
         $builder = $this->db->table('student_courses');

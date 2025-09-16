@@ -11,12 +11,6 @@
         <div class="col">
             <h1 class="mb-4"><?= isset($course) ? 'Edit Course' : 'New Course' ?></h1>
 
-            <?php if (session()->getFlashdata('message')) : ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?= session()->getFlashdata('message') ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php endif; ?>
             <?php if (session()->getFlashdata('error')) : ?>
                 <div class="alert alert-danger" role="alert"><?= session()->getFlashdata('error') ?></div>
             <?php elseif (session()->getFlashdata('errors')) : ?>

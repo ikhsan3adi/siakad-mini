@@ -41,13 +41,13 @@ class CourseController extends BaseController
     {
         $course = $this->courseModel->find($code);
 
-        $enrolledStudents = $this->courseModel->getEnrolledStudents($code);
-
         if (!$course) {
             return redirect()
                 ->to('/admin/courses')
                 ->with('error', 'Course not found.');
         }
+
+        $enrolledStudents = $this->courseModel->getEnrolledStudents($code);
 
         $data = [
             'course' => $course,
