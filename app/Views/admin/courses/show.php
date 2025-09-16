@@ -41,7 +41,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Student ID</th>
+                            <th>Username</th>
                             <th>Full Name</th>
                             <th>Email</th>
                             <th>Entry Year</th>
