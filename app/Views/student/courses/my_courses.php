@@ -10,7 +10,7 @@ My Courses - SIAKAD
     <div class="row">
         <div class="col">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <h1 class="mb-4">Courses</h1>
+                <h1 class="mb-4">My Courses</h1>
 
                 <a href="<?= base_url('student/courses') ?>" class="btn btn-outline-info mb-3">
                     <i class="bi bi-arrow-left-right"></i> Show All Courses
