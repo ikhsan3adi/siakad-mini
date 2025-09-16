@@ -1,5 +1,7 @@
 # Mission 3: Apply Authentication and Authorization with Codeigniter 4
 
+<img alt="image" src="https://github.com/user-attachments/assets/1cf2016b-a5fc-4698-83ab-5524310ed843" />
+
 ---
 
 - Nama: Ikhsan Satriadi
