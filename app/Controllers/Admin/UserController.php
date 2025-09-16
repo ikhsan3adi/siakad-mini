@@ -229,7 +229,7 @@ class UserController extends BaseController
 
             return redirect()
                 ->to('/admin/users' . (in_array('admin', $user->getGroups()) ? '?type=admin' : '?type=student'))
-                ->with('success', 'User deleted successfully.');
+                ->with('message', 'User deleted successfully.');
         } catch (\Exception $e) {
             // Handle exception (e.g., foreign key constraint violation)
             return redirect()

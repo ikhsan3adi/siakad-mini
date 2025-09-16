@@ -59,6 +59,18 @@ class CourseModel extends Model
         return $query->getResultArray();
     }
 
+    // Find course with enrollment info for a specific student and course code
+    public function findEnrollment(string $code, string|int $studentId)
+    {
+        $builder = $this->db->table('student_courses')
+            ->where('student_courses.course_code', $code)
+            ->where('student_courses.student_id', $studentId);
+
+        $query = $builder->get();
+
+        return $query->getRowArray();
+    }
+
     public function enrollStudent(
         string $courseCode,
         int $studentId,

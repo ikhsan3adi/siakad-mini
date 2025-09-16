@@ -30,7 +30,7 @@ class UserModel extends ShieldUserModel
             ->findAll();
     }
 
-    public function getEnrolledCourses(string $student_id, bool $sortByGrade = false)
+    public function getEnrolledCourses(string $student_id, bool $sortByGrade = false, string $keyword = ''): array
     {
         $builder = $this->db->table('student_courses');
         $builder->select('courses.*, student_courses.*');
@@ -41,6 +41,15 @@ class UserModel extends ShieldUserModel
             $builder->orderBy('student_courses.grade', 'DESC');
         } else {
             $builder->orderBy('student_courses.enroll_date', 'DESC');
+        }
+
+        if ($keyword) {
+            $builder->like(
+                'courses.course_name',
+                $keyword,
+                side: 'both',
+                insensitiveSearch: true
+            );
         }
 
         $query = $builder->get();

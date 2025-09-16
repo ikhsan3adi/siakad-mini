@@ -50,10 +50,11 @@ $routes->group('student', ['filter' => ['cookiejwt', 'group:student']], static f
     // --- Student Courses ---
     $routes->group('courses', static function (RouteCollection $routes) {
         $routes->get('/', 'Student\CourseController::index'); // Menampilkan daftar semua mata kuliah yang bisa diambil
-        $routes->get('(:num)', 'Student\CourseController::show/$1'); // Menampilkan detail mata kuliah
-
-        $routes->post('enroll/(:num)', 'Student\CourseController::enroll/$1'); // Memproses pendaftaran (enroll) ke sebuah mata kuliah
 
         $routes->get('my', 'Student\CourseController::myCourses'); // Menampilkan daftar mata kuliah yang sudah diambil oleh student
+
+        $routes->get('(:segment)', 'Student\CourseController::show/$1'); // Menampilkan detail mata kuliah
+
+        $routes->post('enroll/(:segment)', 'Student\CourseController::enroll/$1'); // Memproses pendaftaran (enroll) ke sebuah mata kuliah
     });
 });

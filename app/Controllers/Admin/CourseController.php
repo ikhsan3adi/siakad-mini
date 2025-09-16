@@ -92,7 +92,7 @@ class CourseController extends BaseController
 
         return redirect()
             ->to('/admin/courses')
-            ->with('success', 'Course created successfully.');
+            ->with('message', 'Course created successfully.');
     }
 
     public function edit(string $code)
@@ -143,7 +143,7 @@ class CourseController extends BaseController
 
         return redirect()
             ->to('/admin/courses')
-            ->with('success', 'Course updated successfully.');
+            ->with('message', 'Course updated successfully.');
     }
 
     public function delete(string $code)
@@ -167,7 +167,7 @@ class CourseController extends BaseController
 
             return redirect()
                 ->to('/admin/courses')
-                ->with('success', 'Course deleted successfully.');
+                ->with('message', 'Course deleted successfully.');
         } catch (\Exception $e) {
             // Handle exception (e.g., foreign key constraint violation)
             return redirect()
