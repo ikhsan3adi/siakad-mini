@@ -19,6 +19,11 @@ class CreateStudentCoursesTable extends Migration
                 'constraint' => 10,
                 'null' => false,
             ],
+            'grade' => [
+                'type' => 'DECIMAL',
+                'constraint' => '3,2',
+                'null' => true,
+            ],
             'enroll_date' => [
                 'type' => 'DATETIME',
             ]

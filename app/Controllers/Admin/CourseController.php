@@ -39,14 +39,22 @@ class CourseController extends BaseController
 
     public function show(string $code)
     {
-        // TODO: Show course details including enrolled students
         $course = $this->courseModel->find($code);
+
+        $enrolledStudents = $this->courseModel->getEnrolledStudents($code);
+
         if (!$course) {
             return redirect()
                 ->to('/admin/courses')
                 ->with('error', 'Course not found.');
         }
-        return view('admin/courses/show', ['course' => $course]);
+
+        $data = [
+            'course' => $course,
+            'enrolledStudents' => $enrolledStudents,
+        ];
+
+        return view('admin/courses/show', $data);
     }
 
     public function new()
@@ -147,16 +155,24 @@ class CourseController extends BaseController
                 ->with('error', 'Course not found.');
         }
 
-        $result = $this->courseModel->delete($code);
+        try {
+            //! Warning ON DELETE RESTRICT
+            $result = $this->courseModel->delete($code);
 
-        if (!$result) {
+            if (!$result) {
+                return redirect()
+                    ->to('/admin/courses')
+                    ->with('error', 'Failed to delete course. Please try again.');
+            }
+
             return redirect()
                 ->to('/admin/courses')
-                ->with('error', 'Failed to delete course. Please try again.');
+                ->with('success', 'Course deleted successfully.');
+        } catch (\Exception $e) {
+            // Handle exception (e.g., foreign key constraint violation)
+            return redirect()
+                ->to('/admin/courses')
+                ->with('error', 'Failed to delete course. It may be linked to enrolled students.');
         }
-
-        return redirect()
-            ->to('/admin/courses')
-            ->with('success', 'Course deleted successfully.');
     }
 }

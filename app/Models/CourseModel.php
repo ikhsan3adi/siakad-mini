@@ -10,7 +10,7 @@ class CourseModel extends Model
     protected $primaryKey       = 'course_code';
     protected $useAutoIncrement = false;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false; // supaya ON DELETE RESTRICT di foreign key bisa jalan
     protected $protectFields    = true;
     protected $allowedFields    = [
         'course_code',
@@ -38,5 +38,38 @@ class CourseModel extends Model
             ->where('deleted_at', null)
             ->like('course_name', $keyword, insensitiveSearch: true)
             ->orLike('description', $keyword, insensitiveSearch: true);
+    }
+
+    public function getEnrolledStudents(string $courseCode, bool $sortByGrade = false)
+    {
+        $builder = $this->db->table('student_courses');
+        $builder->select('users.id, users.username, users.full_name, auth_identities.secret as email, users.entry_year, student_courses.grade, student_courses.enroll_date');
+        $builder->join('users', 'student_courses.student_id = users.id');
+        $builder->join('auth_identities', 'student_courses.student_id = auth_identities.user_id');
+        $builder->where('student_courses.course_code', $courseCode);
+
+        if ($sortByGrade) {
+            $builder->orderBy('student_courses.grade', 'DESC');
+        } else {
+            $builder->orderBy('student_courses.enroll_date', 'DESC');
+        }
+
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
+
+    public function enrollStudent(string $courseCode, int $studentId, string $enrollDate, string $grade = null)
+    {
+        $data = [
+            'course_code' => $courseCode,
+            'student_id' => $studentId,
+            'enroll_date' => $enrollDate,
+            'grade' => $grade,
+        ];
+
+        $builder = $this->db->table('student_courses');
+
+        return $builder->insert($data);
     }
 }

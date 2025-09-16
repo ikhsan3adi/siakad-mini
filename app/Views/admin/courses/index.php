@@ -7,7 +7,6 @@ Courses Management - SIAKAD
 <?= $this->section('content') ?>
 
 <div class="container mt-4">
-
     <div class="row">
         <div class="col">
             <h1 class="mb-4">Courses Management</h1>
@@ -65,13 +64,13 @@ Courses Management - SIAKAD
                                 <a href="<?= base_url('/admin/courses/edit/' . $course['course_code']) ?>" class="btn btn-warning btn-sm">
                                     <i class="bi bi-pencil"></i> Edit
                                 </a>
-                                <!-- <form action="<?= base_url('/admin/courses/delete/' . $course['course_code']) ?>" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this course?');">
+                                <form action="<?= base_url('/admin/courses/delete/' . $course['course_code']) ?>" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this course?');">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="bi bi-trash"></i> Delete
-                                    </button>g
-                                </form> -->
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -85,7 +84,6 @@ Courses Management - SIAKAD
             <?= $pager->links('courses', 'my_pager'); ?>
         </div>
     </div>
-
 </div>
 
 <?= $this->endSection() ?>
