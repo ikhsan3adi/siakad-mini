@@ -104,7 +104,7 @@ Fitur utama dari aplikasi ini meliputi:
     php spark db:seed AddEnrolledCourseSeeder   # opsional untuk membuat data enrolled course
    ```
 
-6. Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi database sesuai dengan pengaturan lokal Anda.
+6. Salin file `env` dan rename menjadi `.env` dan sesuaikan konfigurasi database sesuai dengan pengaturan lokal Anda.
 7. Jalankan server pengembangan CodeIgniter.
 
    ```bash
