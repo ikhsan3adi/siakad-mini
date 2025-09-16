@@ -1,68 +1,112 @@
-# CodeIgniter 4 Application Starter
+# Mission 3: Apply Authentication and Authorization with Codeigniter 4
 
-## What is CodeIgniter?
+---
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+- Nama: Ikhsan Satriadi
+- NIM: 241511080
+- Prodi: D3 - Teknik Informatika
+- Kelas: 2C
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Mata Kuliah Proyek 3: Pengembangan Perangkat Lunak Berbasis Web
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### Deskripsi Proyek
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+Aplikasi SIAKAD Mini adalah sebuah sistem informasi akademik sederhana yang dirancang untuk memudahkan pengelolaan data mahasiswa dan mata kuliah di lingkungan perguruan tinggi. Aplikasi ini dibangun menggunakan framework CodeIgniter 4 dan mengimplementasikan fitur autentikasi serta otorisasi pengguna dengan bantuan library CodeIgniter Shield.
 
-## Installation & updates
+Fitur utama dari aplikasi ini meliputi:
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+#### Auth
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- [X] Login
+- [X] Authentication with JWT
+- [X] Authorization with roles/group (admin, student)
 
-## Setup
+#### Admin area
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+- [X] Dashboard
+    - [X] Show total number of users
+    - [X] Show total number of courses
+- [X] Courses management
+    - [X] Show course list with pagination and search
+    - [X] Show course details
+    - [X] Create new course
+    - [X] Edit course
+    - [X] Delete course (if no students are enrolled)
+- [X] Users management
+    - [X] Stundent + admin
+        - [X] Show user list with search
+        - [X] Show user details
+        - [X] Create new user
+        - [X] Edit user
+        - [X] Delete user
+    - [X] Stundent specific actions
+        - [X] View enrolled courses on student details page
 
-## Important Change with index.php
+#### Student area
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- [X] Dashboard
+    - [X] Total enrolled courses
+    - [X] Show grades summary
+        - [X] Average grade
+        - [X] Total credits
+        - [X] Total courses completed (Grade is not null)
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+- [X] Courses management
+    - [X] View available courses
+    - [X] Enroll in a course
+    - [X] View course details
+    - [X] Search and paginate courses
+    - [X] View enrolled courses
 
-**Please** read the user guide for a better explanation of how CI4 works!
+---
 
-## Repository Management
+### Teknologi yang Digunakan
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+- Framework: CodeIgniter 4
+- Library: CodeIgniter Shield (untuk autentikasi dan otorisasi)
+- Dependency Management: Composer
+- Bahasa Pemrograman: PHP
+- Database: MySQL/MariaDB
+- Frontend: HTML, CSS, Bootstrap 5
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+---
 
-## Server Requirements
+### Cara Menjalankan
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+1. Clone repository ini ke dalam direktori server lokal Anda.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+   ```bash
+   git clone https://github.com/ikhsan3adi/siakad-mini.git
+   cd siakad-mini
+    ```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+2. Jalankan perintah composer untuk menginstal dependensi yang diperlukan.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+   ```bash
+   composer install
+   ```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+3. Buat database baru di MySQL bernama `siakad_mini` (bisa disesuaikan di `.env`).
+4. Jalankan perintah migrasi untuk membuat tabel yang diperlukan.
+
+   ```bash
+   php spark migrate --all
+   ```
+
+5. Jalankan seeder untuk mengisi tabel dengan data awal.
+
+   ```bash
+    php spark db:seed AddInitialAdminSeeder     # wajib untuk membuat user admin
+    php spark db:seed AddInitialStudentSeeder   # opsional untuk membuat user student
+    php spark db:seed AddInitialCourseSeeder    # opsional untuk membuat data course
+    php spark db:seed AddEnrolledCourseSeeder   # opsional untuk membuat data enrolled course
+   ```
+
+6. Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi database sesuai dengan pengaturan lokal Anda.
+7. Jalankan server pengembangan CodeIgniter.
+
+   ```bash
+   php spark serve
+   ```
+
+8. Buka browser dan akses `http://localhost:8080` untuk melihat aplikasi berjalan.
