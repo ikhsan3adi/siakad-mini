@@ -46,8 +46,8 @@ Fitur utama dari aplikasi ini meliputi:
         - [X] Edit user
             - [X] Frontend form validation 🆕
         - [X] Delete user
-            - [ ] Bulk delete users 🆕
-            - [ ] Delete confirmation modal 🆕
+            - [X] Bulk delete users 🆕
+            - [X] Delete confirmation modal 🆕
     - [X] Stundent specific actions
         - [X] View enrolled courses on student details page
 
@@ -91,6 +91,22 @@ Fitur utama dari aplikasi ini meliputi:
 
 ![Login Page](image/README/login.png)
 
+#### Student: Courses Management
+
+Available Courses List with Bulk Enroll, Confirmation Modal and dynamic stats for selected courses
+
+![Student Available Courses](image/README/student-available-courses.png)
+
+![Student Enroll Confirmation](image/README/student-enroll-confirmation.png)
+
+#### Student: Enrolled Courses
+
+Enrolled Courses List with Bulk Unenroll and Confirmation Modal
+
+![Student Enrolled Courses](image/README/student-enrolled-courses.png)
+
+![Student Unenroll Confirmation](image/README/student-unenroll-confirmation.png)
+
 #### Admin: Courses Management
 
 Courses List with Bulk Actions and Delete Confirmation Modal
@@ -107,25 +123,11 @@ Users List with Bulk Actions and Delete Confirmation Modal
 
 ![Admin Users List](image/README/admin-users.png)
 
+![Admin Bulk Delete Confirmation](image/README/admin-bulk-delete-confirmation.png)
+
 Frontend Form Validation for Create and Edit User
 
 ![Admin Create User](image/README/admin-create-user.png)
-
-#### Student: Courses Management
-
-Available Courses List with Bulk Enroll, Confirmation Modal and dynamic stats for selected courses
-
-![Student Available Courses](image/README/student-available-courses.png)
-
-![Student Enroll Confirmation](image/README/student-enroll-confirmation.png)
-
-#### Student: Enrolled Courses
-
-Enrolled Courses List with Bulk Unenroll and Confirmation Modal
-
-![Student Enrolled Courses](image/README/student-enrolled-courses.png)
-
-![Student Unenroll Confirmation](image/README/student-unenroll-confirmation.png)
 
 ---
 

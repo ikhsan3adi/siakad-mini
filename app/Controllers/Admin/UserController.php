@@ -237,4 +237,44 @@ class UserController extends BaseController
                 ->with('error', 'Failed to delete user. They may be linked to enrolled courses.');
         }
     }
+
+    public function bulkDelete()
+    {
+        $userIds = $this->request->getPost('selected_user_ids');
+
+        if (empty($userIds) || !is_array($userIds)) {
+            return redirect()
+                ->to('/admin/users')
+                ->with('error', 'No users selected for deletion.');
+        }
+
+        // Prevent deletion of admin users
+        $users = $this->userModel->whereIn('id', $userIds)->findAll();
+        foreach ($users as $user) {
+            if ($user->inGroup('admin')) {
+                return redirect()
+                    ->to('/admin/users')
+                    ->with('error', 'Cannot delete admin users.');
+            }
+        }
+
+        try {
+            $result = $this->userModel->whereIn('id', $userIds)->delete();
+
+            if (!$result) {
+                return redirect()
+                    ->to('/admin/users')
+                    ->with('error', 'Failed to delete users. Please try again.');
+            }
+
+            return redirect()
+                ->to('/admin/users')
+                ->with('message', 'Selected users deleted successfully.');
+        } catch (\Exception $e) {
+            // Handle exception (e.g., foreign key constraint violation)
+            return redirect()
+                ->to('/admin/users')
+                ->with('error', 'Failed to delete users. They may be linked to enrolled courses.');
+        }
+    }
 }

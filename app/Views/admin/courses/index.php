@@ -47,34 +47,6 @@ Courses Management - SIAKAD
                 </div>
             </div>
 
-            <form id="bulkDeleteForm" action="<?= base_url('admin/courses/bulk-delete') ?>" method="post">
-                <?= csrf_field() ?>
-                <input type="hidden" name="_method" value="DELETE">
-            </form>
-
-            <?= view('templates/modal', [
-                'modalId' => 'confirmBulkDeleteModal',
-                'modalTitle' => 'Warning',
-                'modalBody' => 'Are you sure you want to delete the selected courses?',
-                'noConfirm' => false,
-                'danger' => true,
-                'submit' => true,
-            ]) ?>
-
-            <?= view('templates/modal', [
-                'modalId' => 'noSelectionModal',
-                'modalTitle' => 'No Selection',
-                'modalBody' => 'Please select at least one course to delete.',
-                'noConfirm' => true,
-            ]) ?>
-
-            <?= view('templates/modal', [
-                'modalId' => 'confirmSingleDeleteModal',
-                'noConfirm' => false,
-                'danger' => true,
-                'submit' => true,
-            ]) ?>
-
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -115,7 +87,6 @@ Courses Management - SIAKAD
                                 </a>
 
                                 <button id="singleDeleteButton" type="button" class="btn btn-danger btn-sm"
-                                    data-course-id="<?= esc($course['course_code']) ?>"
                                     data-course-code="<?= esc($course['course_code']) ?>"
                                     data-course-name="<?= esc($course['course_name']) ?>">
                                     <i class="bi bi-trash"></i> Delete
@@ -134,6 +105,35 @@ Courses Management - SIAKAD
         </div>
     </div>
 </div>
+
+
+<form id="bulkDeleteForm" action="<?= base_url('admin/courses/bulk-delete') ?>" method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="_method" value="DELETE">
+</form>
+
+<?= view('templates/modal', [
+    'modalId' => 'confirmBulkDeleteModal',
+    'modalTitle' => 'Warning',
+    'modalBody' => 'Are you sure you want to delete the selected courses?',
+    'noConfirm' => false,
+    'danger' => true,
+    'submit' => true,
+]) ?>
+
+<?= view('templates/modal', [
+    'modalId' => 'noSelectionModal',
+    'modalTitle' => 'No Selection',
+    'modalBody' => 'Please select at least one course to delete.',
+    'noConfirm' => true,
+]) ?>
+
+<?= view('templates/modal', [
+    'modalId' => 'confirmSingleDeleteModal',
+    'noConfirm' => false,
+    'danger' => true,
+    'submit' => true,
+]) ?>
 
 <?= $this->endSection() ?>
 
@@ -157,14 +157,12 @@ Courses Management - SIAKAD
         const BSnoSelectionModal = new bootstrap.Modal(noSelectionModal);
 
         let courseToDelete = {
-            courseId: null,
             courseCode: null,
             courseName: null
         };
         singleDeleteButtons.forEach(button => {
             button.addEventListener('click', function() {
                 courseToDelete = {
-                    courseId: this.getAttribute('data-course-id'),
                     courseCode: this.getAttribute('data-course-code'),
                     courseName: this.getAttribute('data-course-name')
                 };
@@ -176,9 +174,9 @@ Courses Management - SIAKAD
         });
 
         confirmSingleDeleteButton.addEventListener('click', function() {
-            if (courseToDelete.courseId) {
+            if (courseToDelete.courseCode) {
                 const form = document.createElement('form');
-                form.action = `/admin/courses/delete/${courseToDelete.courseId}`;
+                form.action = `/admin/courses/delete/${courseToDelete.courseCode}`;
                 form.method = 'post';
 
                 const csrfInput = document.createElement('input');
@@ -197,7 +195,6 @@ Courses Management - SIAKAD
                 form.submit();
 
                 courseToDelete = {
-                    courseId: null,
                     courseCode: null,
                     courseName: null
                 };
