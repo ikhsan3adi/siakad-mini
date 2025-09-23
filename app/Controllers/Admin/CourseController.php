@@ -175,4 +175,33 @@ class CourseController extends BaseController
                 ->with('error', 'Failed to delete course. It may be linked to enrolled students.');
         }
     }
+
+    public function bulkDelete()
+    {
+        $courseCodes = $this->request->getPost('selected_course_codes');
+
+        if (empty($courseCodes) || !is_array($courseCodes)) {
+            return redirect()
+                ->to('/admin/courses')
+                ->with('error', 'No courses selected for deletion.');
+        }
+
+        try {
+            $result = $this->courseModel->whereIn('course_code', $courseCodes)->delete();
+
+            if (!$result) {
+                return redirect()
+                    ->to('/admin/courses')
+                    ->with('error', 'Failed to delete selected courses. Please try again.');
+            }
+
+            return redirect()
+                ->to('/admin/courses')
+                ->with('message', 'Selected courses deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()
+                ->to('/admin/courses')
+                ->with('error', 'Failed to delete selected courses. Some may be linked to enrolled students.');
+        }
+    }
 }

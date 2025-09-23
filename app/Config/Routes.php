@@ -28,6 +28,7 @@ $routes->group('admin', ['filter' => ['cookiejwt', 'group:admin']], static funct
         $routes->get('edit/(:segment)', 'Admin\CourseController::edit/$1'); // Menampilkan form edit
         $routes->put('update/(:segment)', 'Admin\CourseController::update/$1'); // Memproses form edit
         $routes->delete('delete/(:segment)', 'Admin\CourseController::delete/$1'); // Menghapus data
+        $routes->delete('bulk-delete', 'Admin\CourseController::bulkDelete'); // Menghapus data massal
     });
 
     // --- Kelola User (student dan admin) ---
