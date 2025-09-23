@@ -69,97 +69,99 @@
 
 <?= $this->section('scripts') ?>
 <script>
-    var courseNameInput = document.getElementById("course_name");
-    var courseCodeInput = document.getElementById("course_code");
-    var creditsInput = document.getElementById("credits");
-    var descriptionInput = document.getElementById("description");
-    var submitButton = document.getElementById("submitButton");
+    document.addEventListener('DOMContentLoaded', function() {
+        const courseNameInput = document.getElementById("course_name");
+        const courseCodeInput = document.getElementById("course_code");
+        const creditsInput = document.getElementById("credits");
+        const descriptionInput = document.getElementById("description");
+        const submitButton = document.getElementById("submitButton");
 
-    courseNameInput.addEventListener("input", validateCourseName);
-    courseCodeInput.addEventListener("input", validateCourseCode);
-    creditsInput.addEventListener("input", validateCredits);
-    descriptionInput.addEventListener("input", validateDescription);
+        const forms = document.querySelectorAll('.needs-validation');
 
-    function validateCourseName() {
-        let value = courseNameInput.value.trim();
-        let feedback = courseNameInput.nextElementSibling;
+        courseNameInput.addEventListener("input", validateCourseName);
+        courseCodeInput.addEventListener("input", validateCourseCode);
+        creditsInput.addEventListener("input", validateCredits);
+        descriptionInput.addEventListener("input", validateDescription);
 
-        if (value.length === 0) {
-            courseNameInput.classList.add("is-invalid");
-            feedback.textContent = "Course name is required.";
-            return false;
-        } else if (value.length < 3) {
-            courseNameInput.classList.add("is-invalid");
-            feedback.textContent = "Course name must be at least 3 characters.";
-            return false;
-        } else if (value.length > 100) {
-            courseNameInput.classList.add("is-invalid");
-            feedback.textContent = "Course name must be at most 100 characters.";
-            return false;
+        function validateCourseName() {
+            let value = courseNameInput.value.trim();
+            let feedback = courseNameInput.nextElementSibling;
+
+            if (value.length === 0) {
+                courseNameInput.classList.add("is-invalid");
+                feedback.textContent = "Course name is required.";
+                return false;
+            } else if (value.length < 3) {
+                courseNameInput.classList.add("is-invalid");
+                feedback.textContent = "Course name must be at least 3 characters.";
+                return false;
+            } else if (value.length > 100) {
+                courseNameInput.classList.add("is-invalid");
+                feedback.textContent = "Course name must be at most 100 characters.";
+                return false;
+            }
+
+            courseNameInput.classList.remove("is-invalid");
+            feedback.textContent = "";
+            return true;
         }
 
-        courseNameInput.classList.remove("is-invalid");
-        feedback.textContent = "";
-        return true;
-    }
+        function validateCourseCode() {
+            let value = courseCodeInput.value.trim();
+            let feedback = courseCodeInput.nextElementSibling;
 
-    function validateCourseCode() {
-        let value = courseCodeInput.value.trim();
-        let feedback = courseCodeInput.nextElementSibling;
+            if (value.length === 0) {
+                courseCodeInput.classList.add("is-invalid");
+                feedback.textContent = "Course code is required.";
+                return false;
+            } else if (value.length > 10) {
+                courseCodeInput.classList.add("is-invalid");
+                feedback.textContent = "Course code must be at most 10 characters.";
+                return false;
+            }
 
-        if (value.length === 0) {
-            courseCodeInput.classList.add("is-invalid");
-            feedback.textContent = "Course code is required.";
-            return false;
-        } else if (value.length > 10) {
-            courseCodeInput.classList.add("is-invalid");
-            feedback.textContent = "Course code must be at most 10 characters.";
-            return false;
+            courseCodeInput.classList.remove("is-invalid");
+            feedback.textContent = "";
+            return true;
         }
 
-        courseCodeInput.classList.remove("is-invalid");
-        feedback.textContent = "";
-        return true;
-    }
+        function validateCredits() {
+            let value = parseInt(creditsInput.value);
+            let feedback = creditsInput.nextElementSibling;
 
-    function validateCredits() {
-        let value = parseInt(creditsInput.value);
-        let feedback = creditsInput.nextElementSibling;
+            if (isNaN(value)) {
+                creditsInput.classList.add("is-invalid");
+                feedback.textContent = "Credits must be a number.";
+                return false;
+            } else if (value < 1 || value > 9) {
+                creditsInput.classList.add("is-invalid");
+                feedback.textContent = "Credits must be between 1 and 9.";
+                return false;
+            }
 
-        if (isNaN(value)) {
-            creditsInput.classList.add("is-invalid");
-            feedback.textContent = "Credits must be a number.";
-            return false;
-        } else if (value < 1 || value > 9) {
-            creditsInput.classList.add("is-invalid");
-            feedback.textContent = "Credits must be between 1 and 9.";
-            return false;
+            creditsInput.classList.remove("is-invalid");
+            feedback.textContent = "";
+            return true;
         }
 
-        creditsInput.classList.remove("is-invalid");
-        feedback.textContent = "";
-        return true;
-    }
+        function validateDescription() {
+            let value = descriptionInput.value.trim();
+            let feedback = descriptionInput.nextElementSibling;
 
-    function validateDescription() {
-        let value = descriptionInput.value.trim();
-        let feedback = descriptionInput.nextElementSibling;
+            if (value.length === 0) {
+                descriptionInput.classList.add("is-invalid");
+                feedback.textContent = "Description is required.";
+                return false;
+            }
 
-        if (value.length === 0) {
-            descriptionInput.classList.add("is-invalid");
-            feedback.textContent = "Description is required.";
-            return false;
+            descriptionInput.classList.remove("is-invalid");
+            feedback.textContent = "";
+            return true;
         }
 
-        descriptionInput.classList.remove("is-invalid");
-        feedback.textContent = "";
-        return true;
-    }
+        let validations = [validateCourseName, validateCourseCode, validateCredits, validateDescription];
 
-    let validations = [validateCourseName, validateCourseCode, validateCredits, validateDescription];
 
-    (function() {
-        var forms = document.querySelectorAll('.needs-validation');
 
         Array.prototype.slice.call(forms)
             .forEach(function(form) {
@@ -173,6 +175,6 @@
                     }
                 }, false);
             });
-    })();
+    });
 </script>
 <?= $this->endSection() ?>

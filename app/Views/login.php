@@ -92,43 +92,42 @@
 
 <?= $this->section('scripts') ?>
 <script>
-    var usernameInput = document.getElementById("floatingUsernameInput");
-    var passwordInput = document.getElementById("floatingPasswordInput");
-    var submitButton = document.getElementById("submitButton");
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameInput = document.getElementById("floatingUsernameInput");
+        const passwordInput = document.getElementById("floatingPasswordInput");
+        const submitButton = document.getElementById("submitButton");
+        const forms = document.querySelectorAll('.needs-validation');
 
-    usernameInput.addEventListener("input", validateUsername);
-    passwordInput.addEventListener("input", validatePassword);
+        usernameInput.addEventListener("input", validateUsername);
+        passwordInput.addEventListener("input", validatePassword);
 
-    function validateUsername() {
-        // username must be at least 3 characters long
-        if (usernameInput.value.length < 3) {
-            usernameInput.classList.remove("is-valid");
-            usernameInput.classList.add("is-invalid");
-            return false;
+        function validateUsername() {
+            // username must be at least 3 characters long
+            if (usernameInput.value.length < 3) {
+                usernameInput.classList.remove("is-valid");
+                usernameInput.classList.add("is-invalid");
+                return false;
+            }
+
+            usernameInput.classList.remove("is-invalid");
+            usernameInput.classList.add("is-valid");
+            return true;
         }
 
-        usernameInput.classList.remove("is-invalid");
-        usernameInput.classList.add("is-valid");
-        return true;
-    }
+        function validatePassword() {
+            // password must be at least 8 characters long
+            if (passwordInput.value.length < 8) {
+                passwordInput.classList.remove("is-valid");
+                passwordInput.classList.add("is-invalid");
+                return false;
+            }
 
-    function validatePassword() {
-        // password must be at least 8 characters long
-        if (passwordInput.value.length < 8) {
-            passwordInput.classList.remove("is-valid");
-            passwordInput.classList.add("is-invalid");
-            return false;
+            passwordInput.classList.remove("is-invalid");
+            passwordInput.classList.add("is-valid");
+            return true;
         }
 
-        passwordInput.classList.remove("is-invalid");
-        passwordInput.classList.add("is-valid");
-        return true;
-    }
-
-    let validations = [validateUsername, validatePassword];
-
-    (function() {
-        var forms = document.querySelectorAll('.needs-validation');
+        let validations = [validateUsername, validatePassword];
 
         Array.prototype.slice.call(forms)
             .forEach(function(form) {
@@ -144,6 +143,6 @@
                     }
                 }, false);
             });
-    })();
+    });
 </script>
 <?= $this->endSection() ?>
