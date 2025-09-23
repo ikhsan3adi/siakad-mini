@@ -63,8 +63,8 @@ Fitur utama dari aplikasi ini meliputi:
 - [X] Courses management
     - [X] View available courses
     - [X] Enroll in a course
-        - [ ] Bulk enroll courses 🆕
-        - [ ] Enroll confirmation modal 🆕
+        - [X] Bulk enroll courses 🆕
+        - [X] Enroll confirmation modal 🆕
     - [ ] Unenroll from a course 🆕
         - [ ] Bulk unenroll courses 🆕
         - [ ] Unenroll confirmation modal 🆕
@@ -89,25 +89,41 @@ Fitur utama dari aplikasi ini meliputi:
 
 #### Login Page with Frontend Validation
 
+![Login Page](image/README/login.png)
+
 #### Admin: Courses Management
 
 Courses List with Bulk Actions and Delete Confirmation Modal
 
+![Admin Courses List](image/README/admin-courses.png)
+
 Frontend Form Validation for Create and Edit Course
+
+![Admin Create Course](image/README/admin-create-course.png)
 
 #### Admin: Users Management
 
 Users List with Bulk Actions and Delete Confirmation Modal
 
+![Admin Users List](image/README/admin-users.png)
+
 Frontend Form Validation for Create and Edit User
+
+![Admin Create User](image/README/admin-create-user.png)
 
 #### Student: Courses Management
 
 Available Courses List with Bulk Enroll, Confirmation Modal and dynamic stats for selected courses
 
+![Student Available Courses](image/README/student-available-courses.png)
+
+![Student Enroll Confirmation](image/README/student-enroll-confirmation.png)
+
 #### Student: Enrolled Courses
 
 Enrolled Courses List
+
+![Student Enrolled Courses](image/README/student-enrolled-courses.png)
 
 ---
 
