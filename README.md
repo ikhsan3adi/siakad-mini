@@ -65,9 +65,9 @@ Fitur utama dari aplikasi ini meliputi:
     - [X] Enroll in a course
         - [X] Bulk enroll courses 🆕
         - [X] Enroll confirmation modal 🆕
-    - [ ] Unenroll from a course 🆕
-        - [ ] Bulk unenroll courses 🆕
-        - [ ] Unenroll confirmation modal 🆕
+    - [X] Unenroll from a course 🆕
+        - [X] Bulk unenroll courses 🆕
+        - [X] Unenroll confirmation modal 🆕
     - [X] View course details
     - [X] Search and paginate courses
     - [X] View enrolled courses
@@ -121,9 +121,11 @@ Available Courses List with Bulk Enroll, Confirmation Modal and dynamic stats fo
 
 #### Student: Enrolled Courses
 
-Enrolled Courses List
+Enrolled Courses List with Bulk Unenroll and Confirmation Modal
 
 ![Student Enrolled Courses](image/README/student-enrolled-courses.png)
+
+![Student Unenroll Confirmation](image/README/student-unenroll-confirmation.png)
 
 ---
 

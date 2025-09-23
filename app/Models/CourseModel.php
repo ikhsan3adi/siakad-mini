@@ -88,4 +88,13 @@ class CourseModel extends Model
 
         return $builder->insert($data);
     }
+
+    public function unenrollStudent(string $courseCode, int $studentId)
+    {
+        $builder = $this->db->table('student_courses')
+            ->where('course_code', $courseCode)
+            ->where('student_id', $studentId);
+
+        return $builder->delete();
+    }
 }

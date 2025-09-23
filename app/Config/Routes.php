@@ -59,13 +59,13 @@ $routes->group('student', ['filter' => ['cookiejwt', 'group:student']], static f
         // Memproses pendaftaran (enroll) ke beberapa mata kuliah sekaligus
         $routes->post('bulk-enroll', 'Student\CourseController::bulkEnroll');
 
-        //? Memproses pembatalan pendaftaran (unenroll) ke beberapa mata kuliah sekaligus
-        // $routes->post('bulk-unenroll', 'Student\CourseController::bulkUnEnroll'); 
+        // Memproses pembatalan pendaftaran (unenroll) ke beberapa mata kuliah sekaligus
+        $routes->post('bulk-unenroll', 'Student\CourseController::bulkUnEnroll');
 
         // Memproses pendaftaran (enroll) ke sebuah mata kuliah
         $routes->post('enroll/(:segment)', 'Student\CourseController::enroll/$1');
 
-        //? Memproses pembatalan pendaftaran (unenroll) ke sebuah mata kuliah
-        // $routes->post('unenroll/(:segment)', 'Student\CourseController::unEnroll/$1'); 
+        // Memproses pembatalan pendaftaran (unenroll) ke sebuah mata kuliah
+        $routes->post('unenroll/(:segment)', 'Student\CourseController::unEnroll/$1');
     });
 });

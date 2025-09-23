@@ -52,6 +52,26 @@ class CourseController extends BaseController
         return view('student/courses/index', $data);
     }
 
+    public function myCourses()
+    {
+        $currentStudent = auth()->user();
+
+        $keyword = request()->getVar('keyword') ?? '';
+
+        $enrolledCourses = $this->userModel->getEnrolledCourses($currentStudent->id, keyword: $keyword);
+
+        $myEnrollments = $this->userModel->getEnrolledCourses($currentStudent->id);
+
+        $currentStudentCredit = array_sum(array_column($myEnrollments, 'credits'));
+
+        $data = [
+            'courses' => $enrolledCourses,
+            'currentStudentCredit' => $currentStudentCredit,
+        ];
+
+        return view('student/courses/my_courses', $data);
+    }
+
     public function show(string $code)
     {
         $course = $this->courseModel->find($code);
@@ -100,6 +120,30 @@ class CourseController extends BaseController
             ->with('message', "Successfully enrolled in the course $code.");
     }
 
+    public function unenroll(string $code)
+    {
+        $currentStudent = auth()->user();
+
+        $course = $this->courseModel->find($code);
+        if (!$course) {
+            return redirect()
+                ->to('/student/courses')
+                ->with('error', "Course with code $code not found.");
+        }
+
+        $result = $this->courseModel->unenrollStudent($code, $currentStudent->id);
+
+        if (!$result) {
+            return redirect()
+                ->back()
+                ->with('error', "Failed to unenroll from the course $code.");
+        }
+
+        return redirect()
+            ->to("/student/courses/my")
+            ->with('message', "Successfully unenrolled from the course $code.");
+    }
+
     public function bulkEnroll()
     {
         $currentStudent = auth()->user();
@@ -144,14 +188,47 @@ class CourseController extends BaseController
             ->with('errors', $errors);
     }
 
-    public function myCourses()
+    public function bulkUnEnroll()
     {
         $currentStudent = auth()->user();
 
-        $keyword = request()->getVar('keyword') ?? '';
+        $courseCodes = $this->request->getPost('selected_course_codes');
+        if (empty($courseCodes) || !is_array($courseCodes)) {
+            return redirect()
+                ->back()
+                ->with('error', 'No courses selected for unenrollment.');
+        }
 
-        $enrolledCourses = $this->userModel->getEnrolledCourses($currentStudent->id, keyword: $keyword);
+        $unenrolledCount = 0;
+        $errors = [];
+        foreach ($courseCodes as $courseCode) {
+            $course = $this->courseModel->find($courseCode);
+            if ($course) {
+                $result = true;
+                try {
+                    $result = $this->courseModel->unenrollStudent($courseCode, $currentStudent->id);
+                } catch (\Exception $e) {
+                    $result = false;
+                } finally {
+                    if (!$result) {
+                        $errors[] = "Failed to unenroll from the course <strong>{$course['course_name']} ($courseCode)</strong>. It might be due to not being enrolled.";
+                    } else {
+                        $unenrolledCount++;
+                    }
+                }
+            }
+        }
 
-        return view('student/courses/my_courses', ['courses' => $enrolledCourses]);
+        if ($unenrolledCount === 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'Failed to unenroll from the selected courses.')
+                ->with('errors', $errors);
+        }
+
+        return redirect()
+            ->to("/student/courses/my")
+            ->with('message', "Successfully unenrolled from $unenrolledCount course(s).")
+            ->with('errors', $errors);
     }
 }
