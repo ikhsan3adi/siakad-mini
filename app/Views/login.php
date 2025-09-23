@@ -88,7 +88,9 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
 
+<?= $this->section('scripts') ?>
 <script>
     var usernameInput = document.getElementById("floatingUsernameInput");
     var passwordInput = document.getElementById("floatingPasswordInput");
@@ -131,18 +133,17 @@
         Array.prototype.slice.call(forms)
             .forEach(function(form) {
                 form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity() || !validations.every(fn => fn())) {
+                    if (!validations.every(fn => fn())) {
                         event.preventDefault();
                         event.stopPropagation();
                     } else {
                         submitButton.disabled = true;
                         submitButton.innerHTML = 'Signing in...';
+                        submitButton.classList.remove('btn-primary');
+                        submitButton.classList.add('btn-secondary');
                     }
-
-                    form.classList.add('was-validated');
                 }, false);
             });
-    })()
+    })();
 </script>
-
 <?= $this->endSection() ?>
