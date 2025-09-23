@@ -39,11 +39,14 @@ class CourseController extends BaseController
         }
         unset($course);
 
+        $currentStudentCredit = array_sum(array_column($myEnrollments, 'credits'));
+
         $data = [
             'pager' => $this->courseModel->pager,
             'perPage' => $this->perPage,
             'currentPage' => request()->getVar('page_courses') ?? 1,
             'courses' => $courses,
+            'currentStudentCredit' => $currentStudentCredit,
         ];
 
         return view('student/courses/index', $data);
@@ -95,6 +98,50 @@ class CourseController extends BaseController
         return redirect()
             ->to("/student/courses/my")
             ->with('message', "Successfully enrolled in the course $code.");
+    }
+
+    public function bulkEnroll()
+    {
+        $currentStudent = auth()->user();
+
+        $courseCodes = $this->request->getPost('selected_course_codes');
+        if (empty($courseCodes) || !is_array($courseCodes)) {
+            return redirect()
+                ->back()
+                ->with('error', 'No courses selected for enrollment.');
+        }
+
+        $enrolledCount = 0;
+        $errors = [];
+        foreach ($courseCodes as $courseCode) {
+            $course = $this->courseModel->find($courseCode);
+            if ($course) {
+                $result = true;
+                try {
+                    $result = $this->courseModel->enrollStudent($courseCode, $currentStudent->id, date('Y-m-d H:i:s'));
+                } catch (\Exception $e) {
+                    $result = false;
+                } finally {
+                    if (!$result) {
+                        $errors[] = "Failed to enroll in the course <strong>{$course['course_name']} ($courseCode)</strong>. It might be due to already being enrolled.";
+                    } else {
+                        $enrolledCount++;
+                    }
+                }
+            }
+        }
+
+        if ($enrolledCount === 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'Failed to enroll in the selected courses.')
+                ->with('errors', $errors);
+        }
+
+        return redirect()
+            ->to("/student/courses/my")
+            ->with('message', "Successfully enrolled in $enrolledCount course(s).")
+            ->with('errors', $errors);
     }
 
     public function myCourses()
