@@ -35,8 +35,8 @@ Fitur utama dari aplikasi ini meliputi:
     - [X] Edit course
         - [X] Frontend form validation 🆕
     - [X] Delete course (if no students are enrolled)
-        - [ ] Bulk delete courses 🆕
-        - [ ] Delete confirmation modal 🆕
+        - [X] Bulk delete courses 🆕
+        - [X] Delete confirmation modal 🆕
 - [X] Users management
     - [X] Stundent + admin
         - [X] Show user list with search
