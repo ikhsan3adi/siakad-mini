@@ -42,9 +42,9 @@ Fitur utama dari aplikasi ini meliputi:
         - [X] Show user list with search
         - [X] Show user details
         - [X] Create new user
-            - [ ] Frontend form validation 🆕
+            - [X] Frontend form validation 🆕
         - [X] Edit user
-            - [ ] Frontend form validation 🆕
+            - [X] Frontend form validation 🆕
         - [X] Delete user
             - [ ] Bulk delete users 🆕
             - [ ] Delete confirmation modal 🆕
